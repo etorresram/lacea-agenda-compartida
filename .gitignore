@@ -1,0 +1,6 @@
+dist/
+.sites-local.json
+.env*
+*.tar.gz
+node_modules/
+generated.mjs
