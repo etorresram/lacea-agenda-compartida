@@ -26,10 +26,22 @@ test('Guest selects a session and shares a Unicode-safe snapshot that does not o
  const reader=start(link,stored);
  assert.equal(reader.nodes['#shared-view'].textContent,'Selección de César Mora');
  assert.equal(reader.nodes['#send-selection'].disabled,true);
+ assert.equal(reader.nodes['#person-name'].value,'César Mora');
+ const received=reader.nodes['#inspector'].children.filter(n=>n.className?.split(' ').includes('option'))[2];
+ assert.equal(received.className,'option chosen-option');
+ assert.equal(received.children[0].disabled,true);
+ assert.ok(received.children[1].children.some(n=>n.textContent==='✓ Seleccionado por César Mora'));
+ assert.ok(reader.nodes['#events'].children.some(row=>row.children.some(n=>n.className?.includes('chosen-course'))));
  assert.equal(reader.nodes['#inspector'].children.filter(n=>n.className?.split(' ').includes('option'))[2].children[0].checked,true);
  assert.equal(JSON.parse(stored['lacea-owner-v1']).picks.eco,1);
  reader.nodes['#my-view'].onclick();assert.equal(reader.nodes['#send-selection'].disabled,false);
+ assert.equal(reader.nodes['#person-name'].value,'Eric');
  assert.equal(reader.nodes['#inspector'].children.filter(n=>n.className?.split(' ').includes('option'))[1].children[0].checked,true);
+});
+test('Read-only selected options override blue checked and disabled styles',()=>{
+ const html=fs.readFileSync('docs/index.html','utf8');
+ assert.match(html,/#lacea-dash \.option\.chosen-option:has\(input:checked\),#lacea-dash \.option\.chosen-option:has\(input:disabled\)\{background:var\(--selected-fill\);border-color:var\(--selected-green\);opacity:1\}/);
+ assert.match(html,/#lacea-dash \.event\.chosen-course\[aria-pressed=true\]\{outline-color:var\(--selected-green\)\}/);
 });
 test('Invite link is clean; malformed snapshots fall back safely',()=>{
  const owner=start('https://example.org/agenda/');owner.nodes['#invite-friend'].onclick();assert.equal(owner.nodes['#result-url'].value,'https://example.org/agenda/?modo=invitado');
