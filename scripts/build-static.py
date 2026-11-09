@@ -13,6 +13,9 @@ css='''
 css+='''
 #lacea-dash{--selected-green:light-dark(#177044,#8be0af);--selected-fill:light-dark(#e5f5eb,#193e2c)}#lacea-dash .event.chosen-course{background:var(--selected-fill);border-left-color:var(--selected-green)}#lacea-dash .event.chosen-course .kind::after{content:' · Seleccionado';color:var(--selected-green)}#lacea-dash .option.chosen-option,#lacea-dash .option.chosen-option:has(input:checked),#lacea-dash .option.chosen-option:has(input:disabled){background:var(--selected-fill);border-color:var(--selected-green);opacity:1}#lacea-dash .option.chosen-option input{accent-color:var(--selected-green);opacity:1}#lacea-dash .event.chosen-course[aria-pressed=true]{outline-color:var(--selected-green)}#lacea-dash .selection-proof{display:block;color:var(--selected-green);font-size:12px;font-weight:600;margin-top:7px}
 '''
+css+='''
+#lacea-dash .event.ridge{background:light-dark(#eee5fa,#38294c);border-left-color:light-dark(#ac88ce,#c8a6e8)}#lacea-dash .event.ridge .kind{color:light-dark(#714797,#d8bced)}#lacea-dash .event.ridge[aria-pressed=true]{outline-color:light-dark(#ac88ce,#c8a6e8)}
+'''
 template=template.replace('</style>',css+'</style>')
 slots=json.loads((base/'sessions.json').read_text())
 script=(base/'static/share-client.js').read_text().replace('PROGRAM',json.dumps(slots,ensure_ascii=False),1)

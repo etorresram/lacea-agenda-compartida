@@ -67,3 +67,17 @@ test('Wednesday shows both occupied time and overlapping Bonhomme I; guest can s
  first.children[0].onchange();
  assert.equal(JSON.parse(guest.stored['lacea-guest-v1']).picks.b1,0);
 });
+test('Fresh agendas start empty and RIDGE remains fixed for owners and guests',()=>{
+ for(const suffix of ['', '?modo=invitado']){
+  const app=start('https://example.org/agenda/'+suffix);
+  assert.equal(app.nodes['#picked'].textContent,'00');
+  app.nodes['#day-nav'].children[1].onclick();
+  const ridge=app.nodes['#events'].children.find(r=>r.children[1].className==='event ridge');
+  assert.ok(ridge);
+  assert.ok(ridge.children[1].children.some(n=>n.textContent==='RIDGE · horario fijo'));
+  ridge.children[1].onclick();
+  assert.equal(app.nodes['#inspector'].children.some(n=>n.className?.split(' ').includes('option')),false);
+  assert.ok(app.nodes['#inspector'].children.some(n=>n.textContent?.includes('Enrique Mendoza')));
+  assert.equal(app.nodes['#picked'].textContent,'00');
+ }
+});
