@@ -35,3 +35,18 @@ test('Invite link is clean; malformed snapshots fall back safely',()=>{
  const owner=start('https://example.org/agenda/');owner.nodes['#invite-friend'].onclick();assert.equal(owner.nodes['#result-url'].value,'https://example.org/agenda/?modo=invitado');
  const bad=start('https://example.org/agenda/#agenda=not-valid');assert.match(bad.nodes['#share-status'].textContent,/no es válido/);
 });
+test('Wednesday shows both occupied time and overlapping Bonhomme I; guest can select the lecture',()=>{
+ const owner=start('https://example.org/agenda/');
+ owner.nodes['#day-nav'].children[0].onclick();
+ const rows=owner.nodes['#events'].children;
+ assert.ok(rows.some(r=>r.children[0].textContent==='09:00'&&r.children[1].children.some(n=>n.textContent==='Agenda ocupada')));
+ const lecture=rows.find(r=>r.children[0].textContent==='10:00');
+ assert.ok(lecture);assert.equal(lecture.children[0].children[0].textContent,'12:00');
+ lecture.children[1].onclick();
+ assert.ok(owner.nodes['#inspector'].children.some(n=>n.textContent==='Opciones de este bloque'));
+ const guest=start('https://example.org/agenda/?modo=invitado');guest.nodes['#day-nav'].children[0].onclick();
+ assert.ok(guest.nodes['#events'].children.some(r=>r.children[0].textContent==='10:00'));
+ const first=guest.nodes['#inspector'].children.find(n=>n.className?.split(' ').includes('option'));
+ first.children[0].onchange();
+ assert.equal(JSON.parse(guest.stored['lacea-guest-v1']).picks.b1,0);
+});

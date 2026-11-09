@@ -7,9 +7,29 @@
     "type": "fixed",
     "options": [
       [
-        "Compromiso personal",
+        "Agenda ocupada",
         "Reservado",
         []
+      ]
+    ],
+    "note": ""
+  },
+  {
+    "id": "b1",
+    "day": 11,
+    "start": "10:00",
+    "end": "12:00",
+    "type": "choice",
+    "options": [
+      [
+        "Bonhomme I · métodos econométricos para heterogeneidad",
+        "J301",
+        [
+          [
+            "Stéphane Bonhomme",
+            "University of Chicago"
+          ]
+        ]
       ]
     ],
     "note": ""
@@ -62,7 +82,7 @@
     "type": "fixed",
     "options": [
       [
-        "Compromiso personal",
+        "Agenda ocupada",
         "Reservado",
         []
       ]
@@ -418,7 +438,7 @@
     "type": "fixed",
     "options": [
       [
-        "Compromiso personal",
+        "Agenda ocupada",
         "Reservado",
         []
       ]
@@ -453,7 +473,7 @@
     "type": "fixed",
     "options": [
       [
-        "Compromiso personal",
+        "Agenda ocupada",
         "Reservado",
         []
       ]

@@ -18,7 +18,7 @@ export default {
    if(path==='/api/rooms'&&req.method==='POST'){
     const data=await body(req),label=name(data.name);if(!label)return json({error:'Escribe tu nombre.'},400);
     const id=crypto.randomUUID(),invite=token(),now=new Date().toISOString();
-    const choices=Object.fromEntries(SLOTS.filter(s=>s.type!=='fixed').map(s=>[s.id,0]));
+    const choices=Object.fromEntries(SLOTS.filter(s=>s.type!=='fixed').map(s=>[s.id,s.id==='b1'?-1:0]));
     await env.DB.batch([env.DB.prepare('INSERT INTO rooms VALUES (?,?,?,?)').bind(id,uid,await sha(invite),now),env.DB.prepare('INSERT INTO members VALUES (?,?,?,?,?)').bind(id,uid,label,JSON.stringify(choices),now)]);
     return json({id,invite},201);
    }
