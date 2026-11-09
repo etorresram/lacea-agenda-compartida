@@ -2,7 +2,17 @@
 
 Dashboard en tonos azules para elegir sesiones de LACEA 2026, consultar ponentes y afiliaciones y comparar dos recorridos.
 
-**Estado:** implementación y pruebas locales completas; publicación del servidor pendiente. El repositorio no es todavía una web colaborativa operativa. La sincronización del código con el servidor de Sites falló por un error de conexión. Las instrucciones siguientes corresponden a la aplicación una vez desplegada.
+## Versión publicada en GitHub Pages
+
+[Abrir Agenda LACEA](https://etorresram.github.io/lacea-agenda-compartida/)
+
+Pulsa **Invitar a César** y envíale el enlace. Él hace su selección y pulsa **Compartir mi selección** para devolverte un enlace. Al abrirlo ves su recorrido y puedes alternar con **Mi agenda** para comparar coincidencias. Cada enlace contiene una copia de las elecciones de ese momento; los cambios posteriores requieren compartir un enlace nuevo. No necesita cuenta de GitHub ni ChatGPT. Las elecciones personales se conservan en el navegador cuando este permite almacenamiento local.
+
+La versión estática se genera con `python3 scripts/build-static.py` desde `static/` y `sessions.json`, y se publica desde la rama `gh-pages`.
+
+## Versión con servidor (pendiente)
+
+La implementación con sincronización automática descrita a continuación está probada localmente, pero su servidor aún no está publicado. Es distinta de la versión de GitHub Pages.
 
 ## Uso
 
