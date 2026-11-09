@@ -6,7 +6,7 @@ Dashboard en tonos azules para elegir sesiones de LACEA 2026, consultar ponentes
 
 [Abrir Agenda LACEA](https://etorresram.github.io/lacea-agenda-compartida/)
 
-Pulsa **Invitar a César** y envíale el enlace. Él hace su selección y pulsa **Compartir mi selección** para devolverte un enlace. Al abrirlo ves su recorrido y puedes alternar con **Mi agenda** para comparar coincidencias. Cada enlace contiene una copia de las elecciones de ese momento; los cambios posteriores requieren compartir un enlace nuevo. No necesita cuenta de GitHub ni ChatGPT. Las elecciones personales se conservan en el navegador cuando este permite almacenamiento local.
+Pulsa **Invitar a César** y envíale el enlace. Él hace su selección y pulsa **Generar enlace de mi selección** para devolverte un enlace. Al abrirlo ves su recorrido y puedes alternar con **Mi agenda** para comparar coincidencias. Cada enlace contiene una copia de las elecciones de ese momento; los cambios posteriores requieren compartir un enlace nuevo. No necesita cuenta de GitHub ni ChatGPT. Las elecciones personales se conservan en el navegador cuando este permite almacenamiento local.
 
 La versión estática se genera con `python3 scripts/build-static.py` desde `static/` y `sessions.json`, y se publica desde la rama `gh-pages`.
 
