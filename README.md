@@ -2,6 +2,8 @@
 
 Dashboard en tonos azules para elegir sesiones de LACEA 2026, consultar ponentes y afiliaciones y comparar dos recorridos.
 
+**Estado:** implementación y pruebas locales completas; publicación del servidor pendiente. El repositorio no es todavía una web colaborativa operativa. La sincronización del código con el servidor de Sites falló por un error de conexión. Las instrucciones siguientes corresponden a la aplicación una vez desplegada.
+
 ## Uso
 
 1. Abre la web e inicia sesión con ChatGPT.
