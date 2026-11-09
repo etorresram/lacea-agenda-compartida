@@ -4,10 +4,10 @@ const names={11:'Miércoles',12:'Jueves',13:'Viernes',14:'Sábado'};
 const guest=new URLSearchParams(location.search).get('modo')==='invitado';
 const key=guest?'lacea-guest-v1':'lacea-owner-v1';
 const blank=Object.fromEntries(slots.filter(s=>s.type!=='fixed').map(s=>[s.id,-1]));
-let own={v:1,name:guest?'':'Eric',owner:!guest,picks:blank},shared=null,viewShared=false,day=11,selected='b1';
-function clean(p){if(!p||p.v!==1||typeof p.name!=='string'||!p.picks||typeof p.picks!=='object')throw Error('Enlace no válido');const picks={};for(const s of slots){const n=p.picks[s.id];if(s.type!=='fixed')picks[s.id]=Number.isInteger(n)&&n>=-1&&n<s.options.length?n:-1;}return {v:1,name:p.name.trim().slice(0,60)||'Invitado',owner:p.owner===true,picks};}
+let own={v:2,name:guest?'':'Eric',owner:!guest,picks:blank},shared=null,viewShared=false,day=11,selected='b1';
+function clean(p){if(!p||![1,2].includes(p.v)||typeof p.name!=='string'||!p.picks||typeof p.picks!=='object')throw Error('Enlace no válido');const picks={};for(const s of slots){const n=p.picks[s.id];if(s.type!=='fixed')picks[s.id]=Number.isInteger(n)&&n>=-1&&n<s.options.length?n:-1;}return {v:2,name:p.name.trim().slice(0,60)||'Invitado',owner:p.owner===true,picks};}
 function encode(p){const b=new TextEncoder().encode(JSON.stringify(p));return btoa(Array.from(b,c=>String.fromCharCode(c)).join('')).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');}
-function decode(s){if(s.length>8000)throw Error('Enlace demasiado largo');return clean(JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0)))));}
+function decode(s){if(s.length>8000)throw Error('Enlace demasiado largo');const raw=JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(s.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0))));const result=clean(raw);if(raw.v===1)result.picks={...blank};return result;}
 try{const saved=localStorage.getItem(key);if(saved)own=clean(JSON.parse(saved));}catch{}
 let error='';try{const code=new URLSearchParams(location.hash.slice(1)).get('agenda');if(code){shared=decode(code);viewShared=true;}}catch{error='El enlace de selección no es válido. Puedes crear tu propia agenda.';}
 const get=q=>root.querySelector(q);

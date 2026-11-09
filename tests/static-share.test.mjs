@@ -81,3 +81,14 @@ test('Fresh agendas start empty and RIDGE remains fixed for owners and guests',(
   assert.equal(app.nodes['#picked'].textContent,'00');
  }
 });
+test('Previously shared links open with no selections while retaining the sender name',()=>{
+ const old={v:1,name:'César Mora',owner:false,picks:{eco:2,b1:0,ss1:0}};
+ const code=Buffer.from(JSON.stringify(old)).toString('base64url');
+ const reader=start('https://example.org/agenda/#agenda='+code);
+ assert.equal(reader.nodes['#person-name'].value,'César Mora');
+ assert.equal(reader.nodes['#picked'].textContent,'00');
+ for(const day of reader.nodes['#day-nav'].children){
+  day.onclick();
+  assert.equal(reader.nodes['#events'].children.some(r=>r.children[1].className.includes('chosen-course')),false);
+ }
+});
