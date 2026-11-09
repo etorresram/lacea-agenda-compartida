@@ -16,6 +16,8 @@ test('Guest selects a session and shares a Unicode-safe snapshot that does not o
  assert.equal(guest.nodes['#invite-friend'].hidden,true);
  guest.nodes['#send-selection'].onclick();assert.match(guest.nodes['#share-status'].textContent,/Escribe tu nombre/);
  guest.nodes['#person-name'].value='César Mora';guest.nodes['#person-name'].onchange();
+ guest.nodes['#day-nav'].children[1].onclick();
+ guest.nodes['#events'].children.find(r=>r.children[0].textContent==='17:30').children[1].onclick();
  const options=guest.nodes['#inspector'].children.filter(n=>n.className?.split(' ').includes('option'));
  options[2].children[0].onchange();
  assert.ok(guest.nodes['#events'].children.some(row=>row.children.some(n=>n.className?.includes('chosen-course'))));
@@ -24,6 +26,9 @@ test('Guest selects a session and shares a Unicode-safe snapshot that does not o
  const link=guest.nodes['#result-url'].value;assert.ok(link.includes('#agenda='));assert.ok(!link.includes('modo='));
  const stored={'lacea-owner-v1':JSON.stringify({v:1,name:'Eric',owner:true,picks:{eco:1}})};
  const reader=start(link,stored);
+ assert.match(reader.nodes['#day-title'].textContent,/Miércoles 11/);
+ reader.nodes['#day-nav'].children[1].onclick();
+ reader.nodes['#events'].children.find(r=>r.children[0].textContent==='17:30').children[1].onclick();
  assert.equal(reader.nodes['#shared-view'].textContent,'Selección de César Mora');
  assert.equal(reader.nodes['#send-selection'].disabled,true);
  assert.equal(reader.nodes['#person-name'].value,'César Mora');
@@ -49,7 +54,7 @@ test('Invite link is clean; malformed snapshots fall back safely',()=>{
 });
 test('Wednesday shows both occupied time and overlapping Bonhomme I; guest can select the lecture',()=>{
  const owner=start('https://example.org/agenda/');
- owner.nodes['#day-nav'].children[0].onclick();
+ assert.match(owner.nodes['#day-title'].textContent,/Miércoles 11/);
  const rows=owner.nodes['#events'].children;
  assert.ok(rows.some(r=>r.children[0].textContent==='09:00'&&r.children[1].children.some(n=>n.textContent==='Agenda ocupada')));
  const lecture=rows.find(r=>r.children[0].textContent==='10:00');
